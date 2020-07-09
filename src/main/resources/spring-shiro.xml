@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+
+    <!-- 配置ehcache缓存bean，导入ehcache并新建配置文件 -->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+    </bean>
+
+    <!-- 配置自己域realm实现  -->
+    <bean id="shiroRealm" class="com.scaleamer.shiro.ShiroRealm">
+        <property name="credentialsMatcher">
+            <bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+                <property name="hashAlgorithmName" value="MD5"></property>
+                <property name="hashIterations" value="1"></property>
+            </bean>
+        </property>
+    </bean>
+    <!-- 配置 shiro 的核心组件：securityManager -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+<!--        &lt;!&ndash; 配置缓存 &ndash;&gt;-->
+        <property name="cacheManager" ref="cacheManager"/>
+        <!-- 配置域realm，用户名，密码，角色都保存在域里：实现从数据库中获取用户信息，需要我们自己创建一个类（实现Realm接口） -->
+        <property name="realm" ref="shiroRealm"/>
+    </bean>
+
+    <!-- 配置shiro的一些拦截规则，id必须和web.xml中的 shiro 拦截器名一致 -->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- Shiro的核心安全接口,这个属性是必须的 -->
+        <property name="securityManager" ref="securityManager"/>
+        <!-- 身份认证失败，则跳转到登录页面的配置 -->
+        <property name="loginUrl" value="/user/login"/>
+        <!-- 登录成功后的页面 -->
+        <property name="successUrl" value="/success"/>
+        <!-- 权限认证失败，则跳转到指定页面 -->
+        <property name="unauthorizedUrl" value="/unauthorized"/>  <!-- 登录后访问没有权限的页面后跳转的页面 -->
+        <!-- Shiro连接约束配置,即过滤链的定义 -->
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 注意：规则是有顺序的，从上到下，拦截范围必须是从小到大的 -->
+                <!--  url = 拦截规则（anon为匿名，authc为要登录后，才能访问，logout登出过滤） -->
+                /user/login = anon
+                /user/register = anon
+                /logout = logout
+                /case/updateCase = perms["/case/modify"]
+                /case/addCase = perms["/case/add"]
+                /case/** = perms["/case/read"]
+                /post/addPost = perms["/post/add"]
+                /post/deletePost = perms["/post/modify"]
+                /post/** = anon
+                /reply/addPost = perms["/reply/add"]
+                /reply/deletePost = perms["/reply/modify"]
+                /reply/** = anon
+                /statisticsPerDayPlace/clearAll = roles["admin"]
+                /statisticsPerDayPlace/renew = roles["admin"]
+                /**= anon
+            </value>
+        </property>
+    </bean>
+
+
+    <!--    <import resource="classpath:spring-redis.xml"></import>-->
+
+</beans>

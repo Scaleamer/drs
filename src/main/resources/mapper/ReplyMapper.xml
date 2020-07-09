@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scaleamer.dao.ReplyMapper">
+
+    <resultMap id="ReplyMapperLite" type="com.scaleamer.domain.Reply">
+        <id property="reply_id" column="reply_id"></id>
+        <result property="publisher_name" column="publisher_name"></result>
+        <result property="publish_date" column="publish_date"></result>
+        <result property="content" column="content"></result>
+    </resultMap>
+
+    <resultMap id="ReplyMapperPlus_1" type="com.scaleamer.domain.Reply">
+        <id property="reply_id" column="reply_id"></id>
+        <result property="publisher_name" column="publisher_name"></result>
+        <result property="publish_date" column="publish_date"></result>
+        <result property="content" column="content"></result>
+        <association property="post" column="post_id" select="com.scaleamer.dao.PostMapper.queryPostById">
+        </association>
+    </resultMap>
+
+    <resultMap id="ReplyMapperPlus_2" type="com.scaleamer.domain.Reply">
+        <id property="reply_id" column="reply_id"></id>
+        <result property="publisher_name" column="publisher_name"></result>
+        <result property="publish_date" column="publish_date"></result>
+        <result property="content" column="content"></result>
+<!--        <association property="post" column="post_id" select="com.scaleamer.dao.PostMapper.queryPostById"></association>-->
+        <association property="publisher" column="publisher_id"
+                     select="com.scaleamer.dao.UserMapper.getUserByIdLite"></association>
+    </resultMap>
+
+    <insert id="insertReply" keyColumn="reply_id" keyProperty="reply.reply_id" useGeneratedKeys="true">
+        INSERT INTO tb_reply(publisher_name,publisher_id,publish_date,content,post_id)
+        VALUES(#{reply.publisher_name},#{reply.publisher.user_id},#{reply.publish_date},#{reply.content},#{reply.post.post_id})
+    </insert>
+
+    <delete id="deleteReply">
+        DELETE FROM tb_reply
+        WHERE reply_id=#{reply.reply_id} AND publisher_id=#{operator.user_id}
+    </delete>
+    <select id="queryReplyById" resultMap="ReplyMapperLite">
+        SELECT reply_id, publisher_name, publisher_id,publish_date, content
+        FROM tb_reply
+        WHERE reply_id = #{reply_id}
+    </select>
+
+    <!--    <select id="queryReplyByCondition" resultMap="ReplyMapper">-->
+    <!--        SELECT reply_id, publisher_name, publisher_id,publish_date, content-->
+    <!--        FROM tb_reply-->
+    <!--        <where>-->
+    <!--            <if test="reply.content !=null">-->
+    <!--                AND content like '%${reply.content}%'-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--        ORDER BY publish_date DESC-->
+    <!--    </select>-->
+
+    <select id="queryRepliesByUserId" resultMap="ReplyMapperPlus_1">
+        SELECT reply_id, publisher_name, publisher_id,publish_date, content,post_id
+        FROM tb_reply
+        WHERE publisher_id = #{uid}
+    </select>
+
+    <select id="queryRepliesByPostId" resultMap="ReplyMapperPlus_2">
+        SELECT reply_id, publisher_name, publisher_id,publish_date, content
+        FROM tb_reply
+        WHERE post_id = #{post_id}
+    </select>
+</mapper>

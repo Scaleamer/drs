@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scaleamer.dao.CaseMapper">
+
+
+    <insert id="addCase" parameterType="com.scaleamer.domain.Case"
+            useGeneratedKeys="true" keyProperty="case_id">
+        insert into tb_case(patient_name,patient_id,patient_gender,patient_birth_date,patient_native_place,disease_type,
+        disease_time,disease_place_id,disease_description,publisher_id) values (#{patient_name},#{patient_id},#{patient_gender},
+        #{patient_birth_date},#{patient_native_place},#{disease_type},#{disease_time},#{disease_place_id},#{disease_description},
+        #{publisher_id})
+    </insert>
+
+    <delete id="deleteCase"  >
+        delete  from tb_case where case_id=#{case_id}
+    </delete>
+
+    <update id="updateCase" parameterType="com.scaleamer.domain.Case">
+        update tb_case
+        <set>
+            <if test="case.patient_name!=null">
+                patient_name=#{case.patient_name},
+            </if>
+            <if test="case.patient_id!=null">
+                patient_id=#{case.patient_id},
+            </if>
+            <if test="case.patient_gender!=null">
+                patient_gender=#{case.patient_gender},
+            </if>
+            <if test="case.patient_birth_date!=null">
+                patient_birth_date=#{case.patient_birth_date},
+            </if>
+            <if test="case.patient_native_place!=null">
+                patient_native_place=#{case.patient_native_place},
+            </if>
+            <if test="case.disease_type!=null">
+                disease_type=#{case.disease_type},
+            </if>
+            <if test="case.disease_time!=null">
+                disease_time=#{case.disease_time},
+            </if>
+            <if test="case.disease_place_id!=null">
+                disease_place_id=#{case.disease_place_id},
+            </if>
+            <if test="case.disease_description!=null">
+                disease_description=#{case.disease_description},
+            </if>
+        </set>
+        where case_id=#{case_id}
+    </update>
+
+    <select id="findCase" resultType="com.scaleamer.domain.Case" >
+        select * from tb_case where case_id=#{case_id}
+    </select>
+
+    <select id="findMultiCase" resultType="com.scaleamer.domain.Case" >
+        select * from tb_case
+        <where>
+            <if test="patient_name!=null">
+                patient_name=#{patient_name}
+            </if>
+            <if test="patient_gender!=null">
+                and patient_gender=#{patient_gender}
+            </if>
+            <if test="patient_id!=null">
+                and patient_id=#{patient_id}
+            </if>
+            <if test="patient_native_place!=null">
+                and patient_native_place=#{patient_native_place}
+            </if>
+            <if test="disease_type!=null">
+                and disease_type=#{disease_type}
+            </if>
+            <if test="disease_place_id!=null">
+                and disease_place_id=#{disease_place_id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findAllCase" resultType="com.scaleamer.domain.Case" >
+        select * from tb_case
+    </select>
+
+    <select id="getStatistics" resultType="com.scaleamer.domain.statistics.StatisticsPerPlaceDay">
+        SELECT count(*) as number , disease_time as date, disease_place_id as placeId
+        FROM tb_case
+        GROUP BY disease_place_id, disease_time
+        LOCK IN SHARE MODE
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scaleamer.dao.PlaceMapper">
+    <select id="getPlaces" resultType="com.scaleamer.domain.Place">
+        SELECT place_name, place_id
+        FROM tb_place
+    </select>
+
+    <select id="getPlaceById" resultType="com.scaleamer.domain.Place">
+        SELECT place_name, place_id
+        FROM tb_place
+        WHERE place_id=#{place_id}
+    </select>
+
+    <select id="getIds" resultType="Integer">
+        SELECT place_id
+        FROM tb_place
+    </select>
+</mapper>
