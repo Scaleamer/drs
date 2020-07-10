@@ -10,6 +10,7 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
@@ -28,6 +29,7 @@ public class CaseServiceAsyncImpl implements CaseServiceAsync, MessageListener {
     }
 
     @Override
+    @Transactional
     public void onMessage(Message message) {
         byte[] body = message.getBody();
         try {
