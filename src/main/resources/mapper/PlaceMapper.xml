@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scaleamer.dao.PlaceMapper">
+<mapper namespace="com.scaleamer.dao.database.PlaceMapper">
     <select id="getPlaces" resultType="com.scaleamer.domain.Place">
         SELECT place_name, place_id
         FROM tb_place
@@ -18,4 +18,24 @@
         SELECT place_id
         FROM tb_place
     </select>
+
+    <insert id="insertPlace">
+        INSERT INTO tb_place(place_name)
+        VALUES(#{place_name})
+    </insert>
+
+    <delete id="deletePlaceById">
+        DELETE FROM tb_place
+        WHERE place_id = #{id}
+    </delete>
+
+    <update id="modifyPlace">
+        UPDATE tb_place
+        <set>
+            <if test="place_name">
+                place_name = #{place_name}
+            </if>
+        </set>
+        WHERE place_id=#{place_id}
+    </update>
 </mapper>

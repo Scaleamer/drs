@@ -1,6 +1,6 @@
 package com.scaleamer.service.syn.impl;
 
-import com.scaleamer.dao.UserMapper;
+import com.scaleamer.dao.database.UserMapper;
 import com.scaleamer.domain.User;
 import com.scaleamer.service.syn.UserService;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;

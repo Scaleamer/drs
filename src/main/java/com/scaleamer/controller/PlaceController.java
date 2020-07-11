@@ -50,4 +50,55 @@ public class PlaceController {
             return resultMap;
         }
     }
+
+    @RequestMapping(value = "/addPlace", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> addPlace(@RequestParam(value = "place_name", required = true)String placeName){
+        Map<String, Object> resultMap = new HashMap<>();
+        try{
+            Place place = new Place();
+            place.setPlace_name(placeName);
+            placeService.insertPlace(place);
+            resultMap.put("success",true);
+            return resultMap;
+        }catch (Exception e){
+            resultMap.put("success",false);
+            resultMap.put("errMsg",e.getMessage());
+            return resultMap;
+        }
+    }
+
+    @RequestMapping(value = "/deletePlace", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> deletePlace(@RequestParam(value = "place_id", required = true)int place_id){
+        Map<String, Object> resultMap = new HashMap<>();
+        try{
+            placeService.deletePlaceById(place_id);
+            resultMap.put("success",true);
+            return resultMap;
+        }catch (Exception e){
+            resultMap.put("success",false);
+            resultMap.put("errMsg",e.getMessage());
+            return resultMap;
+        }
+    }
+
+    @RequestMapping(value = "/modifyPlace", method = RequestMethod.POST)
+    @ResponseBody
+    private Map<String, Object> modifyPlace(@RequestParam(value = "place_name", required = true)String placeName,
+                                            @RequestParam(value = "place_id", required = true)int place_id){
+        Map<String, Object> resultMap = new HashMap<>();
+        try{
+            Place place = new Place();
+            place.setPlace_name(placeName);
+            place.setPlace_id(place_id);
+            placeService.modifyPlace(place);
+            resultMap.put("success",true);
+            return resultMap;
+        }catch (Exception e){
+            resultMap.put("success",false);
+            resultMap.put("errMsg",e.getMessage());
+            return resultMap;
+        }
+    }
 }

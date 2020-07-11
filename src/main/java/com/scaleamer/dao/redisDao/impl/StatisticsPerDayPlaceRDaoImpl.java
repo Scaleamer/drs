@@ -1,7 +1,7 @@
-package com.scaleamer.redisDao.impl;
+package com.scaleamer.dao.redisDao.impl;
 
 import com.scaleamer.domain.statistics.StatisticsPerPlaceDay;
-import com.scaleamer.redisDao.StatisticsPerDayPlaceRDao;
+import com.scaleamer.dao.redisDao.StatisticsPerDayPlaceRDao;
 import com.scaleamer.utils.DateUtil;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;

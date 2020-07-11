@@ -2,14 +2,15 @@ package com.scaleamer.service.syn.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scaleamer.dao.CaseMapper;
+import com.scaleamer.dao.database.CaseMapper;
 import com.scaleamer.domain.Case;
-import com.scaleamer.redisDao.StatisticsPerDayPlaceRDao;
+import com.scaleamer.dao.redisDao.StatisticsPerDayPlaceRDao;
 import com.scaleamer.service.syn.CaseService;
 import com.scaleamer.utils.DateUtil;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -26,13 +27,16 @@ public class CaseServiceImpl implements CaseService {
     private RabbitTemplate rabbitTemplate;
 
     private ObjectMapper objectMapper = new ObjectMapper();
+
+    /**
+     * 这步不加事务控制是因为这是一个异步操作
+     * @param the_case
+     */
     @Override
     public void addCase(Case the_case) {
         try {
-            System.out.println("BEFORE");
             byte[] bytes  = objectMapper.writeValueAsBytes(the_case);
             rabbitTemplate.convertAndSend(bytes);
-            System.out.println("AFTER");
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -41,7 +45,12 @@ public class CaseServiceImpl implements CaseService {
 //        statisticsByPlaceDao.increaseStatisticsByPlace(the_case.getDisease_place_id(), the_case.getDisease_time());
     }
 
+    /**
+     * 事务控制是必要的，为了是同步
+     * @param case_id
+     */
     @Override
+    @Transactional
     public void deleteCase(int case_id) {
         Case the_case = findCase(case_id);
         int effectedNum = caseMapper.deleteCase(case_id);
@@ -52,7 +61,13 @@ public class CaseServiceImpl implements CaseService {
         }
     }
 
+
+    /**
+     * 事务控制是必要的，为了是同步
+     * @param the_case
+     */
     @Override
+    @Transactional
     public void updateCase(Case the_case) {
         Case old_case = findCase(the_case.getCase_id());
         int effectedNum = caseMapper.updateCase(the_case);

@@ -13,7 +13,7 @@
 	http://www.springframework.org/schema/tx
 	http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <context:component-scan base-package="com.scaleamer.redisDao"/>
+    <context:component-scan base-package="com.scaleamer.dao"/>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}"></property>
         <property name="url" value="${jdbc.url}"></property>
@@ -26,13 +26,13 @@
         <property name="dataSource" ref="dataSource"></property>
         <property name="mapperLocations" value="classpath:mapper/*.xml"/>
         <!--载入mybatis配置文件-->
-        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <property name="configLocation" value="classpath:other-config/mybatis-config.xml"/>
     </bean>
 
 
     <!--配置Mapper接口所在包    -->
     <bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.scaleamer.dao"></property>
+        <property name="basePackage" value="com.scaleamer.dao.database"></property>
     </bean>
 
 </beans>

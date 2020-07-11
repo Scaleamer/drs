@@ -2,14 +2,14 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scaleamer.dao.PostMapper">
+<mapper namespace="com.scaleamer.dao.database.PostMapper">
 
 <resultMap id="PostMapper" type="com.scaleamer.domain.Post">
     <id property="post_id" column="post_id"></id>
     <result property="publisher_name" column="publisher_name"></result>
     <result property="publish_date" column="publish_date"></result>
     <result property="content" column="content"></result>
-<!--    <association property="publisher" column="publisher_id" javaType="com.scaleamer.domain.User" select="com.scaleamer.dao.UserMapper.getUserById">-->
+<!--    <association property="publisher" column="publisher_id" javaType="com.scaleamer.domain.User" select="com.scaleamer.dao.database.UserMapper.getUserById">-->
 <!--    </association>-->
 </resultMap>
 

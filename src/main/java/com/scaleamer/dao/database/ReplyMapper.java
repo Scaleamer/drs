@@ -1,4 +1,4 @@
-package com.scaleamer.dao;
+package com.scaleamer.dao.database;
 
 import com.scaleamer.domain.Post;
 import com.scaleamer.domain.Reply;

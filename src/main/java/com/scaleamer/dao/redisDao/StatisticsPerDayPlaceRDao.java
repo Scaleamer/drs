@@ -1,4 +1,4 @@
-package com.scaleamer.redisDao;
+package com.scaleamer.dao.redisDao;
 
 import com.scaleamer.domain.statistics.StatisticsPerPlaceDay;
 

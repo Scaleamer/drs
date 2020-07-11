@@ -1,9 +1,9 @@
 package com.scaleamer.service.syn.impl;
 
-import com.scaleamer.dao.CaseMapper;
-import com.scaleamer.dao.PlaceMapper;
+import com.scaleamer.dao.database.CaseMapper;
+import com.scaleamer.dao.database.PlaceMapper;
 import com.scaleamer.domain.statistics.StatisticsPerPlaceDay;
-import com.scaleamer.redisDao.StatisticsPerDayPlaceRDao;
+import com.scaleamer.dao.redisDao.StatisticsPerDayPlaceRDao;
 import com.scaleamer.service.syn.StatisticsPerDayPlaceService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

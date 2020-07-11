@@ -17,7 +17,7 @@
 
     <!-- 配置ehcache缓存bean，导入ehcache并新建配置文件 -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"></property>
+        <property name="cacheManagerConfigFile" value="classpath:other-config/ehcache.xml"></property>
     </bean>
 
     <!-- 配置自己域realm实现  -->

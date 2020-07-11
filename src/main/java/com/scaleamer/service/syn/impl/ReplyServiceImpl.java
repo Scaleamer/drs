@@ -1,6 +1,6 @@
 package com.scaleamer.service.syn.impl;
 
-import com.scaleamer.dao.ReplyMapper;
+import com.scaleamer.dao.database.ReplyMapper;
 import com.scaleamer.domain.Reply;
 import com.scaleamer.domain.User;
 import com.scaleamer.service.syn.ReplyService;

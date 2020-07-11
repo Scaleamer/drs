@@ -1,15 +1,14 @@
 package com.scaleamer.shiro;
 
-import com.scaleamer.dao.PermissionMapper;
-import com.scaleamer.dao.RoleMapper;
-import com.scaleamer.dao.UserMapper;
+import com.scaleamer.dao.database.PermissionMapper;
+import com.scaleamer.dao.database.RoleMapper;
+import com.scaleamer.dao.database.UserMapper;
 import com.scaleamer.domain.Permission;
 import com.scaleamer.domain.Role;
 import com.scaleamer.domain.User;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthenticatingRealm;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;

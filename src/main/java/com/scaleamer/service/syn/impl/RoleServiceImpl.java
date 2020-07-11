@@ -1,6 +1,6 @@
 package com.scaleamer.service.syn.impl;
 
-import com.scaleamer.dao.RoleMapper;
+import com.scaleamer.dao.database.RoleMapper;
 import com.scaleamer.domain.Role;
 import com.scaleamer.service.syn.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;

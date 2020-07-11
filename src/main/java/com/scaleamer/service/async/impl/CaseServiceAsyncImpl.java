@@ -1,15 +1,14 @@
 package com.scaleamer.service.async.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.scaleamer.dao.CaseMapper;
+import com.scaleamer.dao.database.CaseMapper;
 import com.scaleamer.domain.Case;
-import com.scaleamer.redisDao.StatisticsPerDayPlaceRDao;
+import com.scaleamer.dao.redisDao.StatisticsPerDayPlaceRDao;
 
 import com.scaleamer.service.async.CaseServiceAsync;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;

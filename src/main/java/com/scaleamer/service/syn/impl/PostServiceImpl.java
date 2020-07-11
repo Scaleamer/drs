@@ -1,6 +1,6 @@
 package com.scaleamer.service.syn.impl;
 
-import com.scaleamer.dao.PostMapper;
+import com.scaleamer.dao.database.PostMapper;
 import com.scaleamer.domain.Post;
 import com.scaleamer.domain.User;
 import com.scaleamer.service.syn.PostService;

@@ -51,7 +51,7 @@
     <!-- 加载springmvc.xml配置文件   -->
     <init-param>
       <param-name>contextConfigLocation</param-name>
-      <param-value>classpath:spring-*.xml</param-value>
+      <param-value>classpath:spring-config/spring-*.xml</param-value>
     </init-param>
     <!--启动服务器时，就创建该servlet-->
     <load-on-startup>1</load-on-startup>

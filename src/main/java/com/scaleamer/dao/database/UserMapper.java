@@ -1,4 +1,4 @@
-package com.scaleamer.dao;
+package com.scaleamer.dao.database;
 
 import com.scaleamer.domain.User;
 import org.apache.ibatis.annotations.Param;

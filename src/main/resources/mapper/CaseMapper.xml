@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.scaleamer.dao.CaseMapper">
+<mapper namespace="com.scaleamer.dao.database.CaseMapper">
 
 
     <insert id="addCase" parameterType="com.scaleamer.domain.Case"
